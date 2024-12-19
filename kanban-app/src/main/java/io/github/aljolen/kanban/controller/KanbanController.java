@@ -2,10 +2,12 @@ package io.github.aljolen.kanban.controller;
 
 import io.github.aljolen.kanban.model.Kanban;
 import io.github.aljolen.kanban.model.KanbanDTO;
+import io.github.aljolen.kanban.model.KanbanResponse;
 import io.github.aljolen.kanban.model.Task;
 import io.github.aljolen.kanban.model.TaskDTO;
 import io.github.aljolen.kanban.service.KanbanService;
 import io.swagger.annotations.ApiOperation;
+import java.util.ArrayList;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +50,7 @@ public class KanbanController {
             Optional<Kanban> optKanban = kanbanService.getKanbanById(id);
             if (optKanban.isPresent()) {
                 return new ResponseEntity<>(
-                        optKanban.get(),
+                        KanbanResponse.of(optKanban.get(), kanbanService.getTasksByKanbanId(id)),
                         HttpStatus.OK);
             } else {
                 return noKanbanFoundResponse(id);
@@ -65,7 +67,7 @@ public class KanbanController {
             Optional<Kanban> optKanban = kanbanService.getKanbanByTitle(title);
             if (optKanban.isPresent()) {
                 return new ResponseEntity<>(
-                        optKanban.get(),
+                        KanbanResponse.of(optKanban.get(), kanbanService.getTasksByKanbanId(optKanban.get().getId())),
                         HttpStatus.OK);
             } else {
                 return new ResponseEntity<>("No kanban found with a title: " + title, HttpStatus.NOT_FOUND);
@@ -80,7 +82,7 @@ public class KanbanController {
     public ResponseEntity<?> createKanban(@RequestBody KanbanDTO kanbanDTO){
         try {
             return new ResponseEntity<>(
-                    kanbanService.saveNewKanban(kanbanDTO),
+                    KanbanResponse.of(kanbanService.saveNewKanban(kanbanDTO), new ArrayList<>()),
                     HttpStatus.CREATED);
         } catch (Exception e) {
             return errorResponse();
@@ -93,8 +95,9 @@ public class KanbanController {
         try {
             Optional<Kanban> optKanban = kanbanService.getKanbanById(id);
             if (optKanban.isPresent()) {
+                Kanban kanban = kanbanService.updateKanban(optKanban.get(), kanbanDTO);
                 return new ResponseEntity<>(
-                        kanbanService.updateKanban(optKanban.get(), kanbanDTO),
+                        KanbanResponse.of(kanban, kanbanService.getTasksByKanbanId(kanban.getId())),
                         HttpStatus.OK);
             } else {
                 return noKanbanFoundResponse(id);
@@ -144,7 +147,8 @@ public class KanbanController {
     public ResponseEntity<?> createTaskAssignedToKanban(@PathVariable Long kanbanId, @RequestBody TaskDTO taskDTO){
         try {
             return new ResponseEntity<>(
-                    kanbanService.addNewTaskToKanban(kanbanId, taskDTO),
+                    KanbanResponse.of(kanbanService.addNewTaskToKanban(kanbanId, taskDTO), kanbanService.getTasksByKanbanId(kanbanId)),
+
                     HttpStatus.CREATED);
         } catch (Exception e) {
             return errorResponse();

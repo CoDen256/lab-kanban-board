@@ -2,7 +2,7 @@ package io.github.aljolen.kanban.service;
 
 import io.github.aljolen.kanban.model.Task;
 import io.github.aljolen.kanban.model.TaskDTO;
-import io.github.aljolen.kanban.repository.kanban.TaskRepository;
+import io.github.aljolen.kanban.repository.task.TaskRepository;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
