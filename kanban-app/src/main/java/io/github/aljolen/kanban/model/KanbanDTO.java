@@ -1,15 +1,15 @@
 package io.github.aljolen.kanban.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Builder
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class KanbanDTO {
 
     private String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

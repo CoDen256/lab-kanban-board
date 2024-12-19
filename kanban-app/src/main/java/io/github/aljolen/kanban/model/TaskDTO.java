@@ -1,15 +1,7 @@
 package io.github.aljolen.kanban.model;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Builder
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class TaskDTO {
 
     @ApiModelProperty(position = 1)
@@ -23,4 +15,36 @@ public class TaskDTO {
 
     @ApiModelProperty(position = 4)
     private TaskStatus status;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status;
+    }
 }

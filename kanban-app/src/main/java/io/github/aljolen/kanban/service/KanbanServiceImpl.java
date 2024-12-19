@@ -5,7 +5,7 @@ import io.github.aljolen.kanban.model.KanbanDTO;
 import io.github.aljolen.kanban.model.Task;
 import io.github.aljolen.kanban.model.TaskDTO;
 import io.github.aljolen.kanban.repository.KanbanRepository;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,8 +14,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class KanbanServiceImpl implements KanbanService {
+
+    public KanbanServiceImpl(KanbanRepository kanbanRepository) {
+        this.kanbanRepository = kanbanRepository;
+    }
 
     private final KanbanRepository kanbanRepository;
 

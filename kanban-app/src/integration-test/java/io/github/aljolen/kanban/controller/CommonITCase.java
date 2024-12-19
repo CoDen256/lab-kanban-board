@@ -44,18 +44,18 @@ public class CommonITCase {
     }
 
     protected KanbanDTO convertKanbanToDTO(Kanban kanban) {
-        return new KanbanDTO().builder()
-                .title(kanban.getTitle())
-                .build();
+        KanbanDTO kanbanDTO = new KanbanDTO();
+        kanban.setTitle(kanban.getTitle());
+        return kanbanDTO;
     }
 
     protected TaskDTO convertTaskToDTO(Task task) {
-        return new TaskDTO().builder()
-                .title(task.getTitle())
-                .description(task.getDescription())
-                .color(task.getColor())
-                .status(task.getStatus())
-                .build();
+        TaskDTO taskDTO = new TaskDTO();
+        taskDTO.setTitle(task.getTitle());
+        taskDTO.setDescription(task.getDescription());
+        taskDTO.setColor(task.getColor());
+        taskDTO.setStatus(task.getStatus());
+        return taskDTO;
     }
 
     protected Kanban saveSingleRandomKanban(){

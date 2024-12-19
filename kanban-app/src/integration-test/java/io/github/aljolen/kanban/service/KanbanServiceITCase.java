@@ -34,9 +34,8 @@ public class KanbanServiceITCase {
     @Test
     public void whenNewKanbanCreated_thenKanbanIsSavedInDb() {
         //given
-        KanbanDTO kanbanDTO = KanbanDTO.builder()
-                                    .title("Test Kanban")
-                                .build();
+        KanbanDTO kanbanDTO = new KanbanDTO();
+        kanbanDTO.setTitle("Test Kanban");
 
         //when
         kanbanService.saveNewKanban(kanbanDTO);

@@ -4,7 +4,7 @@ import io.github.aljolen.kanban.model.Task;
 import io.github.aljolen.kanban.model.TaskDTO;
 import io.github.aljolen.kanban.service.TaskService;
 import io.swagger.annotations.ApiOperation;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +13,12 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/tasks")
-@RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
 public class TaskController {
+
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
+    }
 
     private final TaskService taskService;
 

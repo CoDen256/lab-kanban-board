@@ -3,7 +3,7 @@ package io.github.aljolen.kanban.service;
 import io.github.aljolen.kanban.model.Task;
 import io.github.aljolen.kanban.model.TaskDTO;
 import io.github.aljolen.kanban.repository.TaskRepository;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,10 +12,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
+
+    public TaskServiceImpl(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
 
     @Override
     @Transactional
