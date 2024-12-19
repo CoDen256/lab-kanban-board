@@ -1,4 +1,4 @@
-package io.github.aljolen.kanban.repository;
+package io.github.aljolen.kanban.repository.task;
 
 import io.github.aljolen.kanban.model.Task;
 import org.springframework.data.repository.CrudRepository;

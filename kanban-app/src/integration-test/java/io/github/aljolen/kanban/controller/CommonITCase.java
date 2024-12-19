@@ -5,8 +5,8 @@ import io.github.aljolen.kanban.model.KanbanDTO;
 import io.github.aljolen.kanban.model.Task;
 import io.github.aljolen.kanban.model.TaskDTO;
 import io.github.aljolen.kanban.model.TaskStatus;
-import io.github.aljolen.kanban.repository.KanbanRepository;
-import io.github.aljolen.kanban.repository.TaskRepository;
+import io.github.aljolen.kanban.repository.kanban.KanbanRepository;
+import io.github.aljolen.kanban.repository.task.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.TestPropertySource;
 

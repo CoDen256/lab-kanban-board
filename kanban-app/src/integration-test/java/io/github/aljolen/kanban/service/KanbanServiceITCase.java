@@ -3,7 +3,7 @@ package io.github.aljolen.kanban.service;
 import io.github.aljolen.kanban.config.H2DatabaseConfig4Test;
 import io.github.aljolen.kanban.model.Kanban;
 import io.github.aljolen.kanban.model.KanbanDTO;
-import io.github.aljolen.kanban.repository.KanbanRepository;
+import io.github.aljolen.kanban.repository.kanban.KanbanRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

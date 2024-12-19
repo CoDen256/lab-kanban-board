@@ -5,7 +5,6 @@
     <option name="SPRING_BOOT_MAIN_CLASS" value="io.github.aljolen.kanban.KanbanApplication" />
     <method v="2">
       <option name="Make" enabled="true" />
-      <option name="RunConfigurationTask" enabled="true" run_configuration_name="postgres" run_configuration_type="docker-deploy" />
     </method>
   </configuration>
 </component>

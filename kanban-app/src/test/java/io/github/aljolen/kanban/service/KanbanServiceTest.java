@@ -1,7 +1,7 @@
 package io.github.aljolen.kanban.service;
 
 import io.github.aljolen.kanban.model.Kanban;
-import io.github.aljolen.kanban.repository.KanbanRepository;
+import io.github.aljolen.kanban.repository.kanban.KanbanRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
