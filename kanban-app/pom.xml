@@ -15,7 +15,7 @@
 	<description>Backend app for Kanban app</description>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
 		<skip.integration.tests>false</skip.integration.tests>
 		<sonar.exclusions>**/model/**,**/config/**,**/KanbanApplication.java</sonar.exclusions>
 	</properties>
@@ -58,7 +58,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.8</version>
+			<version>1.18.28</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
