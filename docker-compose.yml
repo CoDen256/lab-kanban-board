@@ -30,10 +30,11 @@ services:
     build: ./kanban-ui
     container_name: kanban-ui
     ports:
-      - 4200:80
+      - 5000:80
     links:
       - kanban-app
 
 
 volumes:
   kanban-data:
+    driver: local

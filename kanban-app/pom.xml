@@ -8,7 +8,7 @@
 		<version>2.1.6.RELEASE</version>
 		<relativePath/>
 	</parent>
-	<groupId>com.wkrzywiec.medium</groupId>
+	<groupId>io.github.aljolen</groupId>
 	<artifactId>kanban-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>kanban-app</name>
