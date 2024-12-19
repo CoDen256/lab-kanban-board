@@ -21,6 +21,8 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long kanbanId;
+
     private String title;
 
     private String description;
@@ -29,6 +31,14 @@ public class Task {
 
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
+
+    public Long getKanbanId() {
+        return kanbanId;
+    }
+
+    public void setKanbanId(Long kanbanId) {
+        this.kanbanId = kanbanId;
+    }
 
     public Long getId() {
         return id;

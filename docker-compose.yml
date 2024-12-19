@@ -17,7 +17,7 @@ services:
     build: ./kanban-app
     container_name: kanban-app
     environment:
-      - DB_SERVER=kanban-postgres
+      - POSTGRES_SERVER=kanban-postgres
       - POSTGRES_DB=kanban
       - POSTGRES_USER=kanban
       - POSTGRES_PASSWORD=kanban

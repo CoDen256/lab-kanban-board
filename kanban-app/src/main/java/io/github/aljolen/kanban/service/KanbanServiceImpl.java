@@ -6,6 +6,7 @@ import io.github.aljolen.kanban.model.Task;
 import io.github.aljolen.kanban.model.TaskDTO;
 import io.github.aljolen.kanban.repository.kanban.KanbanRepository;
 
+import io.github.aljolen.kanban.repository.kanban.TaskRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,8 +17,11 @@ import java.util.Optional;
 @Service
 public class KanbanServiceImpl implements KanbanService {
 
-    public KanbanServiceImpl(KanbanRepository kanbanRepository) {
+    private final TaskRepository taskRepository;
+
+    public KanbanServiceImpl(KanbanRepository kanbanRepository, TaskRepository taskRepository) {
         this.kanbanRepository = kanbanRepository;
+        this.taskRepository = taskRepository;
     }
 
     private final KanbanRepository kanbanRepository;
@@ -34,6 +38,13 @@ public class KanbanServiceImpl implements KanbanService {
     @Transactional
     public Optional<Kanban> getKanbanById(Long id) {
         return kanbanRepository.findById(id);
+    }
+
+    @Override
+    public List<Task> getTasksByKanbanId(Long id) {
+        List<Task> taskList = new ArrayList<>();
+        taskRepository.findAllByKanbanId(id).forEach(taskList::add);
+        return taskList;
     }
 
     @Override
@@ -65,7 +76,7 @@ public class KanbanServiceImpl implements KanbanService {
     @Transactional
     public Kanban addNewTaskToKanban(Long kanbanId, TaskDTO taskDTO) {
         Kanban kanban = kanbanRepository.findById(kanbanId).get();
-        kanban.addTask(convertDTOToTask(taskDTO));
+        taskRepository.save(convertDTOToTask(taskDTO));
         return kanbanRepository.save(kanban);
     }
 

@@ -2,6 +2,7 @@ package io.github.aljolen.kanban.service;
 
 import io.github.aljolen.kanban.model.Kanban;
 import io.github.aljolen.kanban.model.KanbanDTO;
+import io.github.aljolen.kanban.model.Task;
 import io.github.aljolen.kanban.model.TaskDTO;
 
 import java.util.List;
@@ -12,6 +13,8 @@ public interface KanbanService {
     List<Kanban> getAllKanbanBoards();
 
     Optional<Kanban> getKanbanById(Long id);
+
+    List<Task> getTasksByKanbanId(Long id);
 
     Optional<Kanban> getKanbanByTitle(String title);
 
