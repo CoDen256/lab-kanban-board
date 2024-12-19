@@ -2,17 +2,21 @@ package io.github.aljolen.kanban.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import io.swagger.annotations.ApiModelProperty;
-
-
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
-@Table(name ="kanban")
+@Table(name = "kanban")
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id",
@@ -21,17 +25,14 @@ public class Kanban {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(position = 1)
     private Long id;
 
-    @ApiModelProperty(position = 2)
     private String title;
 
     @OneToMany(
             cascade = {CascadeType.ALL},
             fetch = FetchType.EAGER)
     @JoinColumn(name = "kanban_id")
-    @ApiModelProperty(position = 3)
     private List<Task> tasks;
 
     public void addTask(Task task) {
