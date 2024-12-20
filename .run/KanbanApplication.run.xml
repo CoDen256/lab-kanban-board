@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="KanbanApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
     <module name="kanban-app" />
-    <target name="kanban-app2" />
+    <target name="kanban-app" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="io.github.aljolen.kanban.KanbanApplication" />
     <method v="2">
       <option name="Make" enabled="true" />
