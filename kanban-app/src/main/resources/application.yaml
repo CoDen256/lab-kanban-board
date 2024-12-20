@@ -8,5 +8,15 @@ app:
     configuration:
       maximum-pool-size: 30
 
-  mongoDatasource:
-    url: mongodb://mongodb/docker-db
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://mongodb/docker-db
+
+  sql:
+    init:
+      mode: always
+  jpa:
+    hibernate:
+      ddl-auto: none
