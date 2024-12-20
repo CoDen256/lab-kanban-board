@@ -1,6 +1,6 @@
 export class Task {
-    
-    id: number;
+
+    id: String;
     title: String;
     description: String;
     color: String;

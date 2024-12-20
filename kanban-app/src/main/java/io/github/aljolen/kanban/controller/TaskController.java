@@ -33,7 +33,7 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getTask(@PathVariable Long id){
+    public ResponseEntity<?> getTask(@PathVariable String id){
         try {
             Optional<Task> optTask = taskService.getTaskById(id);
             if (optTask.isPresent()) {
@@ -76,7 +76,7 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateTask(@PathVariable Long id, @RequestBody TaskDTO taskDTO){
+    public ResponseEntity<?> updateTask(@PathVariable String id, @RequestBody TaskDTO taskDTO){
         try {
             Optional<Task> optTask = taskService.getTaskById(id);
             if (optTask.isPresent()) {
@@ -92,7 +92,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteTask(@PathVariable Long id){
+    public ResponseEntity<?> deleteTask(@PathVariable String id){
         try {
             Optional<Task> optTask = taskService.getTaskById(id);
             if (optTask.isPresent()) {
@@ -110,7 +110,7 @@ public class TaskController {
         return new ResponseEntity<>("Something went wrong :(", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    private ResponseEntity<String> noTaskFoundResponse(Long id){
+    private ResponseEntity<String> noTaskFoundResponse(String id){
         return new ResponseEntity<>("No task found with id: " + id, HttpStatus.NOT_FOUND);
     }
 

@@ -38,18 +38,4 @@ public class DatasourcesConfiguration {
     public Object dbs(KanbanRepository repository, TaskRepository repositoryTask) {
         return repository;
     } ;
-
-
-
-    @Bean
-    Jackson2RepositoryPopulatorFactoryBean populatorFactory(
-            @Value("classpath:init.js") Resource resource,
-            ObjectMapper objectMapper
-
-    ) {
-        Jackson2RepositoryPopulatorFactoryBean bean = new Jackson2RepositoryPopulatorFactoryBean();
-        bean.setMapper(objectMapper);
-        bean.setResources(new Resource[] { resource });
-        return bean;
-    }
 }

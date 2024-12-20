@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface TaskRepository extends MongoRepository<Task, Long> {
+public interface TaskRepository extends MongoRepository<Task, String> {
 
     Optional<Task> findByTitle(String title);
 
