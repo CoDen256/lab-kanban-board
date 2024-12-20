@@ -1,10 +1,12 @@
 server.servlet.context-path: /api
 
-spring:
+app:
   datasource:
-    url:  jdbc:postgresql://${POSTGRES_SERVER}/${POSTGRES_DB}
+    url: jdbc:postgresql://${POSTGRES_SERVER}/${POSTGRES_DB}
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
+    configuration:
+      maximum-pool-size: 30
 
   mongoDatasource:
     url: mongodb://mongodb/docker-db
