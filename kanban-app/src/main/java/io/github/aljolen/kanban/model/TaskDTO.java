@@ -1,19 +1,14 @@
 package io.github.aljolen.kanban.model;
 
-import io.swagger.annotations.ApiModelProperty;
 
 public class TaskDTO {
 
-    @ApiModelProperty(position = 1)
     private String title;
 
-    @ApiModelProperty(position = 2)
     private String description;
 
-    @ApiModelProperty(position = 3)
     private String color;
 
-    @ApiModelProperty(position = 4)
     private TaskStatus status;
 
     public String getTitle() {

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EntityScan("io.github.aljolen.kanban.model")
-@EnableJpaRepositories("io.github.aljolen.kanban.repository")
+@EnableJpaRepositories("io.github.aljolen.kanban.repository.kanban")
 public class KanbanApplication {
 
 	public static void main(String[] args) {

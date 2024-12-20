@@ -1,6 +1,12 @@
 version: '3'
 services:
-
+  kanban-mongo:
+    image: mongo:latest
+    container_name: "kanban-mongo"
+    ports:
+      - 27070:27017
+    volumes:
+      - kanban-mongo:/data/db
   kanban-postgres:
     image: "postgres:9.6-alpine"
     container_name: kanban-postgres
@@ -37,4 +43,6 @@ services:
 
 volumes:
   kanban-data:
+    driver: local
+  kanban-mongo:
     driver: local

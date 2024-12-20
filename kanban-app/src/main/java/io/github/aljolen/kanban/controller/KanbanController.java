@@ -3,10 +3,8 @@ package io.github.aljolen.kanban.controller;
 import io.github.aljolen.kanban.model.Kanban;
 import io.github.aljolen.kanban.model.KanbanDTO;
 import io.github.aljolen.kanban.model.KanbanResponse;
-import io.github.aljolen.kanban.model.Task;
 import io.github.aljolen.kanban.model.TaskDTO;
 import io.github.aljolen.kanban.service.KanbanService;
-import io.swagger.annotations.ApiOperation;
 import java.util.ArrayList;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
@@ -32,7 +30,6 @@ public class KanbanController {
     private final KanbanService kanbanService;
 
     @GetMapping("/")
-    @ApiOperation(value="View a list of all Kanban boards", response = Kanban.class, responseContainer = "List")
     public ResponseEntity<?> getAllKanbans(){
         try {
             return new ResponseEntity<>(
@@ -44,7 +41,6 @@ public class KanbanController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value="Find a Kanban board info by its id", response = Kanban.class)
     public ResponseEntity<?> getKanban(@PathVariable Long id){
         try {
             Optional<Kanban> optKanban = kanbanService.getKanbanById(id);
@@ -61,7 +57,6 @@ public class KanbanController {
     }
 
     @GetMapping("")
-    @ApiOperation(value="Find a Kanban board info by its title", response = Kanban.class)
     public ResponseEntity<?> getKanbanByTitle(@RequestParam String title){
         try {
             Optional<Kanban> optKanban = kanbanService.getKanbanByTitle(title);
@@ -78,7 +73,6 @@ public class KanbanController {
     }
 
     @PostMapping("/")
-    @ApiOperation(value="Save new Kanban board", response = Kanban.class)
     public ResponseEntity<?> createKanban(@RequestBody KanbanDTO kanbanDTO){
         try {
             return new ResponseEntity<>(
@@ -90,7 +84,6 @@ public class KanbanController {
     }
 
     @PutMapping("/{id}")
-    @ApiOperation(value="Update a Kanban board with specific id", response = Kanban.class)
     public ResponseEntity<?> updateKanban(@PathVariable Long id, @RequestBody KanbanDTO kanbanDTO){
         try {
             Optional<Kanban> optKanban = kanbanService.getKanbanById(id);
@@ -108,7 +101,6 @@ public class KanbanController {
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value="Delete Kanban board with specific id", response = String.class)
     public ResponseEntity<?> deleteKanban(@PathVariable Long id){
         try {
             Optional<Kanban> optKanban = kanbanService.getKanbanById(id);
@@ -126,7 +118,6 @@ public class KanbanController {
     }
 
     @GetMapping("/{kanbanId}/tasks/")
-    @ApiOperation(value="View a list of all tasks for a Kanban with provided id", response = Task.class, responseContainer = "List")
     public ResponseEntity<?> getAllTasksInKanban(@PathVariable Long kanbanId){
          try {
             Optional<Kanban> optKanban = kanbanService.getKanbanById(kanbanId);
@@ -143,7 +134,6 @@ public class KanbanController {
     }
 
     @PostMapping("/{kanbanId}/tasks/")
-    @ApiOperation(value="Save new Task and assign it to Kanban board", response = Kanban.class)
     public ResponseEntity<?> createTaskAssignedToKanban(@PathVariable Long kanbanId, @RequestBody TaskDTO taskDTO){
         try {
             return new ResponseEntity<>(

@@ -3,7 +3,6 @@ package io.github.aljolen.kanban.controller;
 import io.github.aljolen.kanban.model.Task;
 import io.github.aljolen.kanban.model.TaskDTO;
 import io.github.aljolen.kanban.service.TaskService;
-import io.swagger.annotations.ApiOperation;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +22,6 @@ public class TaskController {
     private final TaskService taskService;
 
     @GetMapping("/")
-    @ApiOperation(value="View a list of all tasks", response = Task.class, responseContainer = "List")
     public ResponseEntity<?> getAllTasks(){
         try {
             return new ResponseEntity<>(
@@ -35,7 +33,6 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value="Find a task info by its id", response = Task.class)
     public ResponseEntity<?> getTask(@PathVariable Long id){
         try {
             Optional<Task> optTask = taskService.getTaskById(id);
@@ -52,7 +49,6 @@ public class TaskController {
     }
 
     @GetMapping("")
-    @ApiOperation(value="Find a task info by its title", response = Task.class)
     public ResponseEntity<?> getTaskByTitle(@RequestParam String title){
         try {
             Optional<Task> optTask = taskService.getTaskByTitle(title);
@@ -69,7 +65,6 @@ public class TaskController {
     }
 
     @PostMapping("/")
-    @ApiOperation(value="Save new task", response = Task.class)
     public ResponseEntity<?> createTask(@RequestBody TaskDTO taskDTO){
         try {
             return new ResponseEntity<>(
@@ -81,7 +76,6 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    @ApiOperation(value="Update a task with specific id", response = Task.class)
     public ResponseEntity<?> updateTask(@PathVariable Long id, @RequestBody TaskDTO taskDTO){
         try {
             Optional<Task> optTask = taskService.getTaskById(id);
@@ -98,7 +92,6 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
-    @ApiOperation(value="Delete Task with specific id", response = String.class)
     public ResponseEntity<?> deleteTask(@PathVariable Long id){
         try {
             Optional<Task> optTask = taskService.getTaskById(id);
