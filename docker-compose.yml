@@ -1,12 +1,28 @@
 version: '3'
 services:
-  kanban-mongo:
-    image: mongo:latest
-    container_name: "kanban-mongo"
-    ports:
-      - 27070:27017
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: kanban
     volumes:
       - kanban-mongo:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+      ME_CONFIG_BASICAUTH: false
+
   kanban-postgres:
     image: "postgres:9.6-alpine"
     container_name: kanban-postgres
@@ -23,6 +39,10 @@ services:
     build: ./kanban-app
     container_name: kanban-app
     environment:
+      - MONGO_SERVER=mongo
+      - MONGO_DB=kanban
+      - MONGO_USER=kanban
+      - MONGO_PASSWORD=kanban
       - POSTGRES_SERVER=kanban-postgres
       - POSTGRES_DB=kanban
       - POSTGRES_USER=kanban

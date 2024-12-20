@@ -12,7 +12,10 @@ app:
 spring:
   data:
     mongodb:
-      uri: mongodb://mongodb/docker-db
+      uri: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_SERVER}/${MONGO_DB}
+      username: ${MONGO_USER}
+      password: ${MONGO_PASSWORD}
+      authentication-database: kanban
 
   sql:
     init:

@@ -1,9 +1,11 @@
-CREATE TABLE kanban (
+
+
+CREATE TABLE IF NOT EXISTS kanban  (
     id SERIAL PRIMARY KEY,
     title TEXT
-);
+) ;
 
-CREATE TABLE task (
+CREATE TABLE IF NOT EXISTS task (
                       id SERIAL PRIMARY KEY,
                       title VARCHAR(255) NOT NULL,
                       description TEXT,
