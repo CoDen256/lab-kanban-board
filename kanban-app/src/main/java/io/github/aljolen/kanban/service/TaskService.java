@@ -3,20 +3,21 @@ package io.github.aljolen.kanban.service;
 import io.github.aljolen.kanban.model.Task;
 import io.github.aljolen.kanban.controller.TaskDTO;
 
+import io.github.aljolen.kanban.model.TaskMessage;
 import java.util.List;
 import java.util.Optional;
 
 public interface TaskService {
 
-    List<Task> getAllTasks();
+    List<TaskMessage> getAllTasks();
 
-    Optional<Task> getTaskById(String id);
+    Optional<TaskMessage> getTaskById(String id);
 
-    Optional<Task> getTaskByTitle(String title);
+    Optional<TaskMessage> getTaskByTitle(String title);
 
-    Task saveNewTask(TaskDTO taskDTO);
+    TaskMessage saveNewTask(TaskDTO taskDTO);
 
-    Task updateTask(Task oldTask, TaskDTO newTaskDTO);
+    TaskMessage updateTask(Task oldTask, TaskDTO newTaskDTO);
 
     void deleteTask(Task task);
 }

@@ -49,20 +49,25 @@ public class KanbanServiceImpl implements KanbanService {
     public List<TaskMessage> getTasksByKanbanId(Long id) {
         List<TaskMessage> taskList = new ArrayList<>();
         taskRepository.findAllByKanbanId(id).forEach(t -> {
-            TaskMessage e = new TaskMessage();
-            e.setId(t.getId());
-            e.setTitle(t.getTitle());
-            e.setDescription(t.getDescription());
-            e.setKanbanId(t.getKanbanId());
-            e.setColor(t.getColor());
-            e.setStatus(t.getStatus());
-            e.setImageId(t.getImageId());
-            if (t.getImageId() != null) {
-                e.setImage(imageService.getImage(t.getImageId()).orElse(null));
-            }
+            TaskMessage e = map(t);
             taskList.add(e);
         });
         return taskList;
+    }
+
+    private TaskMessage map(Task t) {
+        TaskMessage e = new TaskMessage();
+        e.setId(t.getId());
+        e.setTitle(t.getTitle());
+        e.setDescription(t.getDescription());
+        e.setKanbanId(t.getKanbanId());
+        e.setColor(t.getColor());
+        e.setStatus(t.getStatus());
+        e.setImageId(t.getImageId());
+        if (t.getImageId() != null) {
+            e.setImage(imageService.getImage(t.getImageId()).orElse(null));
+        }
+        return e;
     }
 
     @Override
