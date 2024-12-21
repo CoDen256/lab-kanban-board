@@ -58,7 +58,15 @@ export class TaskDialogComponent implements OnInit {
   save() {
     this.mapFormToTaskModel();
     if (!this.task.id) {
-      this.kanbanService.saveNewTaskInKanban(this.kanbanId, this.task).subscribe();
+      console.log("saving in kanban")
+      this.kanbanService.saveNewTaskInKanban(this.kanbanId, this.task)
+        .subscribe(
+          {
+            next(value) { console.log('Observable emitted the next value: ' + value); },
+            error(err)  { console.error('Observable emitted an error: ' + err); },
+            complete()  { console.log('Observable emitted the complete notification'); }
+          }
+        );
     } else {
       this.taskService.updateTask(this.task).subscribe();
     }

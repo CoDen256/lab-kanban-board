@@ -1,5 +1,7 @@
-package io.github.aljolen.kanban.model;
+package io.github.aljolen.kanban.controller;
 
+
+import io.github.aljolen.kanban.model.TaskStatus;
 
 public class TaskDTO {
 
@@ -10,6 +12,8 @@ public class TaskDTO {
     private String color;
 
     private TaskStatus status;
+
+    private String image;
 
     public String getTitle() {
         return title;
@@ -41,5 +45,13 @@ public class TaskDTO {
 
     public void setStatus(TaskStatus status) {
         this.status = status;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

@@ -1,7 +1,6 @@
 package io.github.aljolen.kanban.controller;
 
 import io.github.aljolen.kanban.model.Task;
-import io.github.aljolen.kanban.model.TaskDTO;
 import io.github.aljolen.kanban.service.TaskService;
 
 import org.springframework.http.HttpStatus;
@@ -12,7 +11,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/tasks")
-@CrossOrigin(origins = "http://localhost:4200")
 public class TaskController {
 
     public TaskController(TaskService taskService) {

@@ -1,4 +1,4 @@
-package io.github.aljolen.kanban.model;
+package io.github.aljolen.kanban.controller;
 
 
 public class KanbanDTO {

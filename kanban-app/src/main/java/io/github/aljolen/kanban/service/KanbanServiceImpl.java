@@ -1,9 +1,10 @@
 package io.github.aljolen.kanban.service;
 
 import io.github.aljolen.kanban.model.Kanban;
-import io.github.aljolen.kanban.model.KanbanDTO;
+import io.github.aljolen.kanban.controller.KanbanDTO;
 import io.github.aljolen.kanban.model.Task;
-import io.github.aljolen.kanban.model.TaskDTO;
+import io.github.aljolen.kanban.controller.TaskDTO;
+import io.github.aljolen.kanban.model.TaskMessage;
 import io.github.aljolen.kanban.repository.kanban.KanbanRepository;
 
 import io.github.aljolen.kanban.repository.task.TaskRepository;
@@ -18,13 +19,17 @@ import java.util.Optional;
 public class KanbanServiceImpl implements KanbanService {
 
     private final TaskRepository taskRepository;
+    private final KanbanRepository kanbanRepository;
+    private final ImageService imageService;
 
-    public KanbanServiceImpl(KanbanRepository kanbanRepository, TaskRepository taskRepository) {
+
+    public KanbanServiceImpl(KanbanRepository kanbanRepository, TaskRepository taskRepository,
+                             ImageService imageService) {
         this.kanbanRepository = kanbanRepository;
         this.taskRepository = taskRepository;
+        this.imageService = imageService;
     }
 
-    private final KanbanRepository kanbanRepository;
 
     @Override
     @Transactional
@@ -41,9 +46,11 @@ public class KanbanServiceImpl implements KanbanService {
     }
 
     @Override
-    public List<Task> getTasksByKanbanId(Long id) {
-        List<Task> taskList = new ArrayList<>();
-        taskRepository.findAllByKanbanId(id).forEach(taskList::add);
+    public List<TaskMessage> getTasksByKanbanId(Long id) {
+        List<TaskMessage> taskList = new ArrayList<>();
+        taskRepository.findAllByKanbanId(id).forEach(t -> {
+
+        });
         return taskList;
     }
 
@@ -93,6 +100,9 @@ public class KanbanServiceImpl implements KanbanService {
         task.setColor(taskDTO.getColor());
         task.setStatus(taskDTO.getStatus());
         task.setKanbanId(kanbanId);
+        if (taskDTO.getImage() != null) {
+            task.setImageId(imageService.saveImage(taskDTO.getImage()));
+        }
         return task;
     }
 }
