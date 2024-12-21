@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Kanban } from '../model/kanban/kanban';
 import { Task } from '../model/task/task';
 import { environment } from 'src/environments/environment';
+import {Image} from "../model/image/task";
 
 @Injectable({
   providedIn: 'root'
@@ -33,21 +34,46 @@ export class KanbanService {
     );
   }
 
-  saveNewTaskInKanban(kanbanId: String, task: Task, image: File): Observable<any> {
+  saveNewTaskInKanban(kanbanId: String, task: Task): Promise<Task> {
+    console.log("Saving task")
+    console.log(task)
+    return fetch(this.kanbanAppUrl + '/kanbans/' + kanbanId + '/tasks/', {
+      method: 'POST',
+      body: JSON.stringify(task),
+      headers: {'Content-Type': 'application/json' }
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Got task", data)
+        return data
+      })
+      .catch(error => console.error("Error occurred:", error));
+  }
+
+  getImageById(id: string): Promise<void|Blob>{
+    return fetch(this.kanbanAppUrl +"/images/"+id)
+      .then(r => r.blob())
+      .then(data => {
+        console.log("Got blob", data)
+        return data
+      })
+      .catch(error => console.error("Error occurred:", error));
+  }
+
+  saveImage(file: File): Promise<Image> {
     const formData = new FormData();
+    formData.append('image', file, file.name);
 
-    // Append the task JSON as a string
-    formData.append('task', JSON.stringify(task));
-
-    // Append the image file
-    if (image) {
-      formData.append('image', image, image.name);
-    }
-    console.log('Uploading to:', this.kanbanAppUrl + '/kanbans/' + kanbanId + '/tasks/' + formData);
-
-    return this.http.post<any>(
-      this.kanbanAppUrl + '/kanbans/' + kanbanId + '/tasks/',
-      formData);
+    return fetch(this.kanbanAppUrl + "/images/", {
+      method: 'POST',
+      body: formData,
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Got image", data)
+        return data
+      })
+      .catch(error => console.error("Error occurred:", error));
   }
 
   private prepareTiTleJsonObject(title: string) {

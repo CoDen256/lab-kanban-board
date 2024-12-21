@@ -5,6 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { KanbanService } from '../service/kanban-service.service';
 import { TaskService } from '../service/task.service';
+import {Image} from "../model/image/task";
 
 @Component({
   selector: 'app-task-dialog',
@@ -55,15 +56,17 @@ export class TaskDialogComponent implements OnInit {
   ngOnInit() {
   }
 
-  save() {
+  async save() {
     this.mapFormToTaskModel();
     if (!this.task.id) {
       console.log("saving in kanban")
-      this.kanbanService.saveNewTaskInKanban(this.kanbanId, this.task, this.selectedImage)
-        .subscribe(
-          (res) => console.log(res),
-          (err) => console.log(err)
-        );
+      if (this.selectedImage) {
+        console.log("saving image")
+        const  image = await this.kanbanService.saveImage(this.selectedImage)
+        this.task.imageId = image.id
+      }
+
+        await this.kanbanService.saveNewTaskInKanban(this.kanbanId, this.task);
     } else {
       this.taskService.updateTask(this.task).subscribe();
     }

@@ -5,6 +5,7 @@ import io.github.aljolen.kanban.service.ImageService;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,10 +42,10 @@ public class ImageController{
     @GetMapping("/{id}")
     public ResponseEntity<?> getImage(@PathVariable UUID id) {
         try {
-            Optional<Image> optKanban = imageService.getImageById(id);
-            if (optKanban.isPresent()) {
+            Optional<Image> image = imageService.getImageById(id);
+            if (image.isPresent()) {
                 return new ResponseEntity<>(
-                        optKanban.get(),
+                        image.get().getImage(),
                         HttpStatus.OK);
             } else {
                 return noImageFoundResponse(id);
@@ -74,6 +75,6 @@ public class ImageController{
     }
 
     private ResponseEntity<String> noImageFoundResponse(UUID id) {
-        return new ResponseEntity<>("No kanban found with id: " + id, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("No image found with id: " + id, HttpStatus.NOT_FOUND);
     }
 }
