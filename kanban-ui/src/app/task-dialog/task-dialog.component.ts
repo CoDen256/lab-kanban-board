@@ -37,6 +37,21 @@ export class TaskDialogComponent implements OnInit {
   });
    }
 
+  onFileSelected(event: Event): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+
+      // Convert the image to Base64
+      reader.onload = (e: any) => {
+        this.task.image = e.target.result; // Assign Base64 string to the task object
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
+
   ngOnInit() {
   }
 
@@ -53,7 +68,7 @@ export class TaskDialogComponent implements OnInit {
 
   close() {
       this.dialogRef.close();
-  } 
+  }
 
   private mapFormToTaskModel(): void {
     this.task.title = this.form.get('title').value;

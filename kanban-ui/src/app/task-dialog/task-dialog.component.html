@@ -1,37 +1,53 @@
 <div class="dialog-title">
-  <h1 mat-dialog-title>{{ dialogTitle }}</h1> 
+  <h1 mat-dialog-title>{{ dialogTitle }}</h1>
 </div>
-
 
 <mat-dialog-content [formGroup]="form" class="dialog-content">
 
-  <mat-form-field>
-      <input matInput
-              placeholder="Title"
-             formControlName="title"
-             class="task-title">
+  <!-- Title Field -->
+  <mat-form-field appearance="fill">
+    <input matInput
+           placeholder="Title"
+           formControlName="title"
+           class="task-title">
   </mat-form-field>
 
-  <mat-form-field>
-      <mat-select placeholder="Select color"
-          formControlName="color">
-          <mat-option value="#feff9c">
-              YELLOW</mat-option>
-          <mat-option value="#7afcff">
-              BLUE</mat-option>
-          <mat-option value="#ff7eb9">
-              PINK</mat-option>
-      </mat-select>
+  <!-- Color Selection Field -->
+  <mat-form-field appearance="fill">
+    <mat-select placeholder="Select color"
+                formControlName="color">
+      <mat-option value="#feff9c">YELLOW</mat-option>
+      <mat-option value="#7afcff">BLUE</mat-option>
+      <mat-option value="#ff7eb9">PINK</mat-option>
+    </mat-select>
   </mat-form-field>
 
-  <mat-form-field>
-    <textarea matInput placeholder="Description"
-        formControlName="description" class="description-area">
-    </textarea>
+  <!-- Description Field -->
+  <mat-form-field appearance="fill">
+      <textarea matInput
+                placeholder="Description"
+                formControlName="description"
+                class="description-area">
+      </textarea>
   </mat-form-field>
+
+  <!-- Image Upload Field -->
+  <mat-form-field>
+    <input type="file"
+           (change)="onFileSelected($event)"
+           accept=".jpeg, .png, .gif"
+           placeholder="Upload Image"
+           class="image-upload">
+  </mat-form-field>
+
+<!--  &lt;!&ndash; Image Preview &ndash;&gt;-->
+<!--  <div *ngIf="task.image" class="image-preview">-->
+<!--    <img [src]="task.image" alt="Task Image" class="image-thumbnail">-->
+<!--  </div>-->
+
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button class="mat-raised-button"(click)="close()">Close</button>
-  <button class="mat-raised-button mat-primary"(click)="save()">Save</button>
+  <button class="mat-raised-button" (click)="close()">Close</button>
+  <button class="mat-raised-button mat-primary" (click)="save()">Save</button>
 </mat-dialog-actions>
