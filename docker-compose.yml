@@ -61,7 +61,14 @@ services:
       - 5000:80
     links:
       - kanban-app
-
+  rabbitmq:
+    image: 'rabbitmq:3-management'
+    environment:
+      - 'RABBITMQ_DEFAULT_PASS=secret'
+      - 'RABBITMQ_DEFAULT_USER=myuser'
+    ports:
+      - "5672:5672" # RabbitMQ AMQP port
+      - "15672:15672" # RabbitMQ management console
 
 volumes:
   kanban-data:

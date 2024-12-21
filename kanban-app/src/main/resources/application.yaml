@@ -15,6 +15,11 @@ logging:
           servlet:
             DispatcherServlet: DEBUG
 spring:
+  rabbitmq:
+    host: rabbitmq
+    port: 5672
+    username: myuser
+    password: secret
   servlet:
     multipart:
       max-file-size: 100MB
