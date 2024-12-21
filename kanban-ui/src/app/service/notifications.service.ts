@@ -40,25 +40,27 @@ export class RabbitMQService {
   }
 
   private showNotification(text: string) {
-    const notification = document.createElement('div');
-    notification.style.position = 'fixed';
-    notification.style.top = '20px';
-    notification.style.right = '20px';
-    notification.style.backgroundColor = '#4caf50';
-    notification.style.color = 'white';
-    notification.style.padding = '15px';
-    notification.style.borderRadius = '5px';
-    notification.style.boxShadow = '0px 4px 8px rgba(0,0,0,0.2)';
-    notification.style.fontSize = '16px';
-    notification.style.zIndex = '9999';
-    notification.innerText = text;
-
-    document.body.appendChild(notification);
-
     // Automatically remove the notification after 3 seconds
-    setTimeout(() => {
-      notification.remove();
-    }, 3000);
+      console.log("creating notification")
+      const notification = document.createElement('div');
+      notification.style.position = 'fixed';
+      notification.style.top = '20px';
+      notification.style.right = '20px';
+      notification.style.backgroundColor = '#4caf50';
+      notification.style.color = 'white';
+      notification.style.padding = '15px';
+      notification.style.borderRadius = '5px';
+      notification.style.boxShadow = '0px 4px 8px rgba(0,0,0,0.2)';
+      notification.style.fontSize = '16px';
+      notification.style.zIndex = '9999';
+      notification.innerText = text;
+      document.body.appendChild(notification);
+      console.log("appending")
+
+      setTimeout(() => {
+        notification.remove();
+        window.location.reload()
+      }, 3000);
   }
 
 }
