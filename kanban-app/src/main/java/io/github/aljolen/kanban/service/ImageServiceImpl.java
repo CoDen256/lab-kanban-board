@@ -3,6 +3,7 @@ package io.github.aljolen.kanban.service;
 import io.github.aljolen.kanban.model.TaskImage;
 import io.github.aljolen.kanban.repository.kanban.ImageRepository;
 import java.util.Optional;
+import java.util.UUID;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public Optional<String> getImage(String imageId) {
-        return imageRepository.findById(imageId)
+        return imageRepository.findById(UUID.fromString(imageId))
                 .map(TaskImage::getImage)
                 .map(Base64::encodeBase64String);
     }
