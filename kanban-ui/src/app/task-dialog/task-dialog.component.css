@@ -1,36 +1,24 @@
-.dialog-title {
-    display: flex;
-    flex-direction: column;
-}
-
-.task-title {
-    font-size: 150%;
-}
-
 .dialog-content {
-    width: 650px;
-    display: flex;
-    flex-direction: column;
-}
-
-.description-area {
-  height: 200px;
-}
-
-.image-preview {
-  margin-top: 16px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
 }
 
-.image-thumbnail {
-  max-width: 100%;
-  max-height: 150px; /* Limit image preview size */
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.form-field {
+  display: flex;
+  flex-direction: column;
 }
 
-.image-upload {
-  cursor: pointer;
+.form-field label {
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.upload-field {
+  margin-top: 8px;
 }

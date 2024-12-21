@@ -37,7 +37,7 @@ export class TaskDialogComponent implements OnInit {
   });
    }
 
-  onFileSelected(event: Event): void {
+  uploadFile(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files[0]) {
       const file = fileInput.files[0];

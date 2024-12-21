@@ -3,48 +3,39 @@
 </div>
 
 <mat-dialog-content [formGroup]="form" class="dialog-content">
+  <div class="form-field">
+    <mat-form-field>
+      <input matInput formControlName="title" placeholder="Title">
+    </mat-form-field>
+  </div>
 
-  <!-- Title Field -->
-  <mat-form-field appearance="fill">
-    <input matInput
-           placeholder="Title"
-           formControlName="title"
-           class="task-title">
-  </mat-form-field>
+  <div class="form-field">
+    <mat-form-field>
+      <mat-select formControlName="color" placeholder="Select a color">
+        <mat-option value="#feff9c">YELLOW</mat-option>
+        <mat-option value="#7afcff">BLUE</mat-option>
+        <mat-option value="#ff7eb9">PINK</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 
-  <!-- Color Selection Field -->
-  <mat-form-field appearance="fill">
-    <mat-select placeholder="Select color"
-                formControlName="color">
-      <mat-option value="#feff9c">YELLOW</mat-option>
-      <mat-option value="#7afcff">BLUE</mat-option>
-      <mat-option value="#ff7eb9">PINK</mat-option>
-    </mat-select>
-  </mat-form-field>
+  <div class="form-field">
+    <mat-form-field>
+      <textarea matInput formControlName="description" placeholder="Description"></textarea>
+    </mat-form-field>
+  </div>
 
-  <!-- Description Field -->
-  <mat-form-field appearance="fill">
-      <textarea matInput
-                placeholder="Description"
-                formControlName="description"
-                class="description-area">
-      </textarea>
-  </mat-form-field>
-
-  <!-- Image Upload Field -->
-  <mat-form-field>
+  <div class="form-field">
     <input type="file"
-           (change)="onFileSelected($event)"
+           (change)="uploadFile($event)"
            accept=".jpeg, .png, .gif"
-           placeholder="Upload Image"
-           class="image-upload">
-  </mat-form-field>
+           placeholder="Upload Image" class="upload-field">
+  </div>
 
-<!--  &lt;!&ndash; Image Preview &ndash;&gt;-->
-<!--  <div *ngIf="task.image" class="image-preview">-->
-<!--    <img [src]="task.image" alt="Task Image" class="image-thumbnail">-->
-<!--  </div>-->
-
+    <!-- Image Preview -->
+  <div *ngIf="task.image" class="image-preview">
+    <img [src]="task.image" alt="Task Image" class="image-thumbnail">
+  </div>
 </mat-dialog-content>
 
 <mat-dialog-actions>
