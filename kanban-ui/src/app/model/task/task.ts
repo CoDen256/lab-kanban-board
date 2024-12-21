@@ -5,5 +5,5 @@ export class Task {
     description: String;
     color: String;
     status: String;
-    image: String;
+    imageId: String;
 }

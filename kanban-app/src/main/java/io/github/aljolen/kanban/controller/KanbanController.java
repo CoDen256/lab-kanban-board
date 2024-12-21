@@ -1,7 +1,6 @@
 package io.github.aljolen.kanban.controller;
 
 import io.github.aljolen.kanban.model.Kanban;
-import io.github.aljolen.kanban.model.KanbanMessage;
 import io.github.aljolen.kanban.service.KanbanService;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -28,7 +27,7 @@ public class KanbanController {
     private final KanbanService kanbanService;
 
     @GetMapping("/")
-    public ResponseEntity<?> getAllKanbans(){
+    public ResponseEntity<?> getAllKanbans() {
         try {
             return new ResponseEntity<>(
                     kanbanService.getAllKanbanBoards(),
@@ -39,7 +38,7 @@ public class KanbanController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getKanban(@PathVariable Long id){
+    public ResponseEntity<?> getKanban(@PathVariable Long id) {
         try {
             Optional<Kanban> optKanban = kanbanService.getKanbanById(id);
             if (optKanban.isPresent()) {
@@ -55,7 +54,7 @@ public class KanbanController {
     }
 
     @GetMapping("")
-    public ResponseEntity<?> getKanbanByTitle(@RequestParam String title){
+    public ResponseEntity<?> getKanbanByTitle(@RequestParam String title) {
         try {
             Optional<Kanban> optKanban = kanbanService.getKanbanByTitle(title);
             if (optKanban.isPresent()) {
@@ -71,7 +70,7 @@ public class KanbanController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> createKanban(@RequestBody KanbanDTO kanbanDTO){
+    public ResponseEntity<?> createKanban(@RequestBody KanbanDTO kanbanDTO) {
         try {
             return new ResponseEntity<>(
                     KanbanMessage.of(kanbanService.saveNewKanban(kanbanDTO), new ArrayList<>()),
@@ -82,7 +81,7 @@ public class KanbanController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateKanban(@PathVariable Long id, @RequestBody KanbanDTO kanbanDTO){
+    public ResponseEntity<?> updateKanban(@PathVariable Long id, @RequestBody KanbanDTO kanbanDTO) {
         try {
             Optional<Kanban> optKanban = kanbanService.getKanbanById(id);
             if (optKanban.isPresent()) {
@@ -99,7 +98,7 @@ public class KanbanController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteKanban(@PathVariable Long id){
+    public ResponseEntity<?> deleteKanban(@PathVariable Long id) {
         try {
             Optional<Kanban> optKanban = kanbanService.getKanbanById(id);
             if (optKanban.isPresent()) {
@@ -116,8 +115,8 @@ public class KanbanController {
     }
 
     @GetMapping("/{kanbanId}/tasks/")
-    public ResponseEntity<?> getAllTasksInKanban(@PathVariable Long kanbanId){
-         try {
+    public ResponseEntity<?> getAllTasksInKanban(@PathVariable Long kanbanId) {
+        try {
             Optional<Kanban> optKanban = kanbanService.getKanbanById(kanbanId);
             if (optKanban.isPresent()) {
                 return new ResponseEntity<>(
@@ -132,7 +131,7 @@ public class KanbanController {
     }
 
     @PostMapping("/{kanbanId}/tasks/")
-    public ResponseEntity<?> createTaskAssignedToKanban(@PathVariable Long kanbanId, @RequestBody TaskDTO taskDTO){
+    public ResponseEntity<?> createTaskAssignedToKanban(@PathVariable Long kanbanId, @RequestBody TaskDTO taskDTO) {
         try {
             return new ResponseEntity<>(
                     KanbanMessage.of(kanbanService.addNewTaskToKanban(kanbanId, taskDTO), kanbanService.getTasksByKanbanId(kanbanId)),
@@ -142,11 +141,11 @@ public class KanbanController {
         }
     }
 
-    private ResponseEntity<String> errorResponse(){
+    private ResponseEntity<String> errorResponse() {
         return new ResponseEntity<>("Something went wrong :(", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    private ResponseEntity<String> noKanbanFoundResponse(Long id){
+    private ResponseEntity<String> noKanbanFoundResponse(Long id) {
         return new ResponseEntity<>("No kanban found with id: " + id, HttpStatus.NOT_FOUND);
     }
 }

@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.UUID;
 
 @Entity
 @Table(name = "task")
@@ -32,7 +33,7 @@ public class Task {
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
 
-    private String imageId;
+    private UUID imageId;
 
     public Long getKanbanId() {
         return kanbanId;
@@ -82,11 +83,11 @@ public class Task {
         this.status = status;
     }
 
-    public String getImageId() {
+    public UUID getImageId() {
         return imageId;
     }
 
-    public void setImageId(String imageId) {
+    public void setImageId(UUID imageId) {
         this.imageId = imageId;
     }
 }

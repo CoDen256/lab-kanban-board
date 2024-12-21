@@ -2,7 +2,6 @@ package io.github.aljolen.kanban.service;
 
 import io.github.aljolen.kanban.model.Task;
 import io.github.aljolen.kanban.controller.TaskDTO;
-import io.github.aljolen.kanban.model.TaskMessage;
 import io.github.aljolen.kanban.repository.task.TaskRepository;
 
 import org.springframework.stereotype.Service;
@@ -16,59 +15,42 @@ import java.util.Optional;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
-    private final ImageService imageService;
 
-    public TaskServiceImpl(TaskRepository taskRepository, ImageService imageService) {
+    public TaskServiceImpl(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
-        this.imageService = imageService;
-    }
-
-    private TaskMessage mapTask(Task t) {
-        TaskMessage e = new TaskMessage();
-        e.setId(t.getId());
-        e.setTitle(t.getTitle());
-        e.setDescription(t.getDescription());
-        e.setKanbanId(t.getKanbanId());
-        e.setColor(t.getColor());
-        e.setStatus(t.getStatus());
-        e.setImageId(t.getImageId());
-        if (t.getImageId() != null) {
-            e.setImage(imageService.getImage(t.getImageId()).orElse(null));
-        }
-        return e;
     }
 
     @Override
     @Transactional
-    public List<TaskMessage> getAllTasks() {
+    public List<Task> getAllTasks() {
         System.out.println("getAllTasks invoked");
-        List<TaskMessage> tasksList = new ArrayList<>();
-        taskRepository.findAll().forEach(t -> tasksList.add(mapTask(t)));
+        List<Task> tasksList = new ArrayList<>();
+        tasksList.addAll(taskRepository.findAll());
         return tasksList;
     }
 
     @Override
     @Transactional
-    public Optional<TaskMessage> getTaskById(String id) {
-        return taskRepository.findById(id).map(this::mapTask);
+    public Optional<Task> getTaskById(String id) {
+        return taskRepository.findById(id);
     }
 
     @Override
     @Transactional
-    public Optional<TaskMessage> getTaskByTitle(String title) {
-        return taskRepository.findByTitle(title).map(this::mapTask);
+    public Optional<Task> getTaskByTitle(String title) {
+        return taskRepository.findByTitle(title);
     }
 
 
     @Override
     @Transactional
-    public TaskMessage saveNewTask(TaskDTO taskDTO) {
-        return mapTask(taskRepository.save(convertDTOToTask(taskDTO)));
+    public Task saveNewTask(TaskDTO taskDTO) {
+        return taskRepository.save(convertDTOToTask(taskDTO));
     }
 
     @Override
     @Transactional
-    public TaskMessage updateTask(Task oldTask, TaskDTO newTaskDTO) {
+    public Task updateTask(Task oldTask, TaskDTO newTaskDTO) {
         return taskRepository.save(updateTaskFromDTO(oldTask, newTaskDTO));
     }
 
@@ -84,10 +66,13 @@ public class TaskServiceImpl implements TaskService {
         task.setDescription(taskDTO.getDescription());
         task.setColor(taskDTO.getColor());
         task.setStatus(taskDTO.getStatus());
+        if (taskDTO.getImageId() != null) {
+            task.setImageId(taskDTO.getImageId());
+        }
         return task;
     }
 
-    private TaskMessage updateTaskFromDTO(Task task, TaskDTO taskDTO){
+    private Task updateTaskFromDTO(Task task, TaskDTO taskDTO){
         if(Optional.ofNullable(taskDTO.getTitle()).isPresent()){
             task.setTitle(taskDTO.getTitle());
         }
@@ -103,10 +88,9 @@ public class TaskServiceImpl implements TaskService {
         if (Optional.ofNullable((taskDTO.getStatus())).isPresent()) {
             task.setStatus(taskDTO.getStatus());
         }
-        TaskMessage taskMessage = mapTask(task);
-        if (taskDTO.getImage() != null) {
-            taskMessage.setImage(taskDTO.getImage());
+        if (taskDTO.getImageId() != null) {
+            task.setImageId(taskDTO.getImageId());
         }
-        return taskMessage;
+        return task;
     }
 }

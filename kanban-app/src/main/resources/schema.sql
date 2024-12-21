@@ -7,5 +7,6 @@ CREATE TABLE IF NOT EXISTS kanban  (
 
 CREATE TABLE IF NOT EXISTS image (
                       id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-                      image BYTEA
+                      image BYTEA,
+                      name TEXT
     );

@@ -1,7 +1,6 @@
 package io.github.aljolen.kanban.controller;
 
 import io.github.aljolen.kanban.model.Task;
-import io.github.aljolen.kanban.model.TaskMessage;
 import io.github.aljolen.kanban.service.TaskService;
 
 import org.springframework.http.HttpStatus;
@@ -34,7 +33,7 @@ public class TaskController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getTask(@PathVariable String id){
         try {
-            Optional<TaskMessage> optTask = taskService.getTaskById(id);
+            Optional<Task> optTask = taskService.getTaskById(id);
             if (optTask.isPresent()) {
                 return new ResponseEntity<>(
                         optTask.get(),
@@ -50,7 +49,7 @@ public class TaskController {
     @GetMapping("")
     public ResponseEntity<?> getTaskByTitle(@RequestParam String title){
         try {
-            Optional<TaskMessage> optTask = taskService.getTaskByTitle(title);
+            Optional<Task> optTask = taskService.getTaskByTitle(title);
             if (optTask.isPresent()) {
                 return new ResponseEntity<>(
                         optTask.get(),
@@ -77,7 +76,7 @@ public class TaskController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateTask(@PathVariable String id, @RequestBody TaskDTO taskDTO){
         try {
-            Optional<TaskMessage> optTask = taskService.getTaskById(id);
+            Optional<Task> optTask = taskService.getTaskById(id);
             if (optTask.isPresent()) {
                 return new ResponseEntity<>(
                         taskService.updateTask(optTask.get(), taskDTO),
@@ -93,7 +92,7 @@ public class TaskController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteTask(@PathVariable String id){
         try {
-            Optional<TaskMessage> optTask = taskService.getTaskById(id);
+            Optional<Task> optTask = taskService.getTaskById(id);
             if (optTask.isPresent()) {
                 taskService.deleteTask(optTask.get());
                 return new ResponseEntity<>(String.format("Task with id: %d was deleted", id), HttpStatus.OK);

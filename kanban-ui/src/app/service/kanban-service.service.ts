@@ -33,15 +33,21 @@ export class KanbanService {
     );
   }
 
-  saveNewTaskInKanban(kanbanId: String, task: Task): Observable<Task> {
-    console.log(task)
-    let headers = new HttpHeaders({'Content-Type': 'application/json' });
-    let options = { headers: headers };
-    console.log(this.kanbanAppUrl + '/kanbans/' + kanbanId + '/tasks/')
-    return this.http.post<Task>(
+  saveNewTaskInKanban(kanbanId: String, task: Task, image: File): Observable<any> {
+    const formData = new FormData();
+
+    // Append the task JSON as a string
+    formData.append('task', JSON.stringify(task));
+
+    // Append the image file
+    if (image) {
+      formData.append('image', image, image.name);
+    }
+    console.log('Uploading to:', this.kanbanAppUrl + '/kanbans/' + kanbanId + '/tasks/' + formData);
+
+    return this.http.post<any>(
       this.kanbanAppUrl + '/kanbans/' + kanbanId + '/tasks/',
-      task,
-      options);
+      formData);
   }
 
   private prepareTiTleJsonObject(title: string) {

@@ -33,8 +33,8 @@
   </div>
 
     <!-- Image Preview -->
-  <div *ngIf="task.image" class="image-preview">
-    <img [src]="task.image" alt="Task Image" class="image-thumbnail">
+  <div *ngIf="imagePreviewUrl" class="image-preview">
+    <img [src]="imagePreviewUrl" alt="Task Image" class="image-thumbnail">
   </div>
 </mat-dialog-content>
 

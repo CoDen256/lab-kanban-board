@@ -1,10 +1,11 @@
-package io.github.aljolen.kanban.model;
+package io.github.aljolen.kanban.controller;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import io.github.aljolen.kanban.model.Kanban;
+import io.github.aljolen.kanban.model.Task;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
@@ -12,17 +13,17 @@ import java.util.stream.Collectors;
         scope = KanbanMessage.class)
 public class KanbanMessage extends Kanban {
 
-    private List<TaskMessage> tasks = new ArrayList<>();
+    private List<Task> tasks = new ArrayList<>();
 
-    public List<TaskMessage> getTasks() {
+    public List<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<TaskMessage> tasks) {
+    public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
 
-    public static KanbanMessage of(Kanban kanban, List<TaskMessage> tasks) {
+    public static KanbanMessage of(Kanban kanban, List<Task> tasks) {
         KanbanMessage response = new KanbanMessage();
         response.setId(kanban.getId());
         response.setTitle(kanban.getTitle());

@@ -16,7 +16,8 @@ export class TaskDialogComponent implements OnInit {
   dialogTitle: String;
   kanbanId: String;
   task: Task;
-
+  selectedImage: File | null = null;
+  imagePreviewUrl: string | null = null; // URL for preview
   form: FormGroup;
 
   constructor(
@@ -40,15 +41,14 @@ export class TaskDialogComponent implements OnInit {
   uploadFile(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files[0]) {
-      const file = fileInput.files[0];
+      this.selectedImage = fileInput.files[0]; // Store the selected file
       const reader = new FileReader();
-
-      // Convert the image to Base64
-      reader.onload = (e: any) => {
-        this.task.image = e.target.result; // Assign Base64 string to the task object
+      reader.onload = () => {
+        this.imagePreviewUrl = reader.result as string;
+        console.log('Selected url:', this.imagePreviewUrl);
       };
-
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(this.selectedImage);
+      console.log('Selected image:', this.selectedImage);
     }
   }
 
@@ -59,13 +59,10 @@ export class TaskDialogComponent implements OnInit {
     this.mapFormToTaskModel();
     if (!this.task.id) {
       console.log("saving in kanban")
-      this.kanbanService.saveNewTaskInKanban(this.kanbanId, this.task)
+      this.kanbanService.saveNewTaskInKanban(this.kanbanId, this.task, this.selectedImage)
         .subscribe(
-          {
-            next(value) { console.log('Observable emitted the next value: ' + value); },
-            error(err)  { console.error('Observable emitted an error: ' + err); },
-            complete()  { console.log('Observable emitted the complete notification'); }
-          }
+          (res) => console.log(res),
+          (err) => console.log(err)
         );
     } else {
       this.taskService.updateTask(this.task).subscribe();

@@ -7,9 +7,18 @@ app:
     password: ${POSTGRES_PASSWORD}
     configuration:
       maximum-pool-size: 30
-
-
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          servlet:
+            DispatcherServlet: DEBUG
 spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 500MB
   data:
     mongodb:
       uri: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_SERVER}/${MONGO_DB}
@@ -23,3 +32,4 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+debug: true

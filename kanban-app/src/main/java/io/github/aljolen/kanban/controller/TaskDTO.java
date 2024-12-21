@@ -2,6 +2,7 @@ package io.github.aljolen.kanban.controller;
 
 
 import io.github.aljolen.kanban.model.TaskStatus;
+import java.util.UUID;
 
 public class TaskDTO {
 
@@ -13,7 +14,7 @@ public class TaskDTO {
 
     private TaskStatus status;
 
-    private String image;
+    private UUID imageId;
 
     public String getTitle() {
         return title;
@@ -47,11 +48,11 @@ public class TaskDTO {
         this.status = status;
     }
 
-    public String getImage() {
-        return image;
+    public UUID getImageId() {
+        return imageId;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageId(UUID imageId) {
+        this.imageId = imageId;
     }
 }

@@ -4,7 +4,6 @@ import io.github.aljolen.kanban.model.Kanban;
 import io.github.aljolen.kanban.controller.KanbanDTO;
 import io.github.aljolen.kanban.model.Task;
 import io.github.aljolen.kanban.controller.TaskDTO;
-import io.github.aljolen.kanban.model.TaskMessage;
 import io.github.aljolen.kanban.repository.kanban.KanbanRepository;
 
 import io.github.aljolen.kanban.repository.task.TaskRepository;
@@ -20,14 +19,11 @@ public class KanbanServiceImpl implements KanbanService {
 
     private final TaskRepository taskRepository;
     private final KanbanRepository kanbanRepository;
-    private final ImageService imageService;
 
 
-    public KanbanServiceImpl(KanbanRepository kanbanRepository, TaskRepository taskRepository,
-                             ImageService imageService) {
+    public KanbanServiceImpl(KanbanRepository kanbanRepository, TaskRepository taskRepository) {
         this.kanbanRepository = kanbanRepository;
         this.taskRepository = taskRepository;
-        this.imageService = imageService;
     }
 
 
@@ -46,28 +42,10 @@ public class KanbanServiceImpl implements KanbanService {
     }
 
     @Override
-    public List<TaskMessage> getTasksByKanbanId(Long id) {
-        List<TaskMessage> taskList = new ArrayList<>();
-        taskRepository.findAllByKanbanId(id).forEach(t -> {
-            TaskMessage e = map(t);
-            taskList.add(e);
-        });
+    public List<Task> getTasksByKanbanId(Long id) {
+        List<Task> taskList = new ArrayList<>();
+        taskRepository.findAllByKanbanId(id).forEach(taskList::add);
         return taskList;
-    }
-
-    private TaskMessage map(Task t) {
-        TaskMessage e = new TaskMessage();
-        e.setId(t.getId());
-        e.setTitle(t.getTitle());
-        e.setDescription(t.getDescription());
-        e.setKanbanId(t.getKanbanId());
-        e.setColor(t.getColor());
-        e.setStatus(t.getStatus());
-        e.setImageId(t.getImageId());
-        if (t.getImageId() != null) {
-            e.setImage(imageService.getImage(t.getImageId()).orElse(null));
-        }
-        return e;
     }
 
     @Override
@@ -100,7 +78,7 @@ public class KanbanServiceImpl implements KanbanService {
     public Kanban addNewTaskToKanban(Long kanbanId, TaskDTO taskDTO) {
         Kanban kanban = kanbanRepository.findById(kanbanId).get();
         taskRepository.save(convertDTOToTask(taskDTO, kanbanId));
-        return kanbanRepository.save(kanban);
+        return kanban;
     }
 
     private Kanban convertDTOToKanban(KanbanDTO kanbanDTO){
@@ -116,8 +94,8 @@ public class KanbanServiceImpl implements KanbanService {
         task.setColor(taskDTO.getColor());
         task.setStatus(taskDTO.getStatus());
         task.setKanbanId(kanbanId);
-        if (taskDTO.getImage() != null) {
-            task.setImageId(imageService.saveImage(taskDTO.getImage()));
+        if (taskDTO.getImageId() != null) {
+            task.setImageId(taskDTO.getImageId());
         }
         return task;
     }
