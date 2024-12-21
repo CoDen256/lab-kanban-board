@@ -51,6 +51,8 @@ services:
       - 8080:8080
     links:
       - kanban-postgres
+    volumes:
+      - kanban-images:/images
 
   kanban-ui:
     build: ./kanban-ui
@@ -65,4 +67,6 @@ volumes:
   kanban-data:
     driver: local
   kanban-mongo:
+    driver: local
+  kanban-images:
     driver: local
