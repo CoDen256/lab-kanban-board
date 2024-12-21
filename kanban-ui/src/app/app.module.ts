@@ -15,13 +15,6 @@ import { KanbanComponent } from './kanban/kanban.component';
 import { TaskDialogComponent } from './task-dialog/task-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { KanbanDialogComponent } from './kanban-dialog/kanban-dialog.component';
-import {
-  NgxAwesomePopupModule,
-  DialogConfigModule,
-  ConfirmBoxConfigModule,
-  ToastNotificationConfigModule
-} from '@costlydeveloper/ngx-awesome-popup';
-
 
 @NgModule({
   declarations: [
@@ -32,10 +25,6 @@ import {
     KanbanDialogComponent
   ],
   imports: [
-    NgxAwesomePopupModule.forRoot(), // Essential, mandatory main module.
-    DialogConfigModule.forRoot(), // Needed for instantiating dynamic components.
-    ConfirmBoxConfigModule.forRoot(), // Needed for instantiating confirm boxes.
-    ToastNotificationConfigModule.forRoot(), // Needed for instantiating toast notifications.
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

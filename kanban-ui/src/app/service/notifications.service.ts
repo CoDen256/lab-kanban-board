@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Client, StompSubscription } from '@stomp/stompjs';
-// Import service from the library
-import { ToastEvokeService } from '@costlydeveloper/ngx-awesome-popup';
 
 
 @Injectable({
@@ -10,7 +8,7 @@ import { ToastEvokeService } from '@costlydeveloper/ngx-awesome-popup';
 export class RabbitMQService {
   private client: Client;
 
-  constructor(private toast: NgToastService) {
+  constructor() {
     this.client = new Client({
       brokerURL: 'ws://' + window.location.hostname + ':15674/ws',
       connectHeaders: {
@@ -37,8 +35,30 @@ export class RabbitMQService {
   private subscribeToQueue(): void {
     const subscription: StompSubscription = this.client.subscribe('/queue/notifications', (message) => {
       console.log('Received message:', message.body);
-      this.toast.success({detail:'Success',summary:message.body, sticky:true,position:'tr'})
+      this.showNotification(message.body)
     });
+  }
+
+  private showNotification(text: string) {
+    const notification = document.createElement('div');
+    notification.style.position = 'fixed';
+    notification.style.top = '20px';
+    notification.style.right = '20px';
+    notification.style.backgroundColor = '#4caf50';
+    notification.style.color = 'white';
+    notification.style.padding = '15px';
+    notification.style.borderRadius = '5px';
+    notification.style.boxShadow = '0px 4px 8px rgba(0,0,0,0.2)';
+    notification.style.fontSize = '16px';
+    notification.style.zIndex = '9999';
+    notification.innerText = text;
+
+    document.body.appendChild(notification);
+
+    // Automatically remove the notification after 3 seconds
+    setTimeout(() => {
+      notification.remove();
+    }, 3000);
   }
 
 }
