@@ -1,24 +1,26 @@
 import { Injectable } from '@angular/core';
-import { Client } from '@stomp/stompjs';
+import { AMQPWebSocketClient } from './js/amqp-websocket-client.mjs'
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class MessageService {
-  private client: Client;
+export class RabbitMQService {
 
-  constructor() {
-    this.client = new Client({
-      brokerURL: 'ws://localhost:8080/ws',
-      reconnectDelay: 5000,
-    });
+  private amqp: AMQPWebSocketClient = new AMQPWebSocketClient("ws://rabbitmq:15674/ws", "/", "myuser", "secret")
+  constructor() {}
 
-    this.client.onConnect = () => {
-      this.client.subscribe('/topic/messages', (message) => {
-        console.log('Received: ' + message.body);
-      });
-    };
+  async connect(): Promise<void> {
+    console.log("connection")
 
-    this.client.activate();
+    const conn = await this.amqp.connect()
+    const ch = await conn.channel()
+    console.log("channel"+ch)
+
+    const q = await ch.queue("notifications")
+    console.log("queie"+q)
+    const consumer = await q.subscribe({noAck: false}, (msg) => {
+      console.log(msg)
+      msg.ack()
+    })
   }
 }
