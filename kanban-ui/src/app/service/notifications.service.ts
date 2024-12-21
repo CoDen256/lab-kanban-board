@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Client, StompSubscription } from '@stomp/stompjs';
+import {Injectable} from '@angular/core';
+import {Client, StompSubscription} from '@stomp/stompjs';
 
 
 @Injectable({
@@ -29,19 +29,31 @@ export class RabbitMQService {
   }
 
   connect() {
+
     this.client.activate();
+    console.log(localStorage.getItem('notificationDisplayed'))
+    if (localStorage.getItem('notificationDisplayed')) {
+      // Show the notification again after 3 seconds if it was shown before
+      const not = localStorage.getItem('notificationDisplayed')
+      localStorage.removeItem('notificationDisplayed');
+      this.showNotification(not);
+    }
   }
 
   private subscribeToQueue(): void {
     const subscription: StompSubscription = this.client.subscribe('/queue/notifications', (message) => {
       console.log('Received message:', message.body);
       this.showNotification(message.body)
+      window.location.reload()
     });
   }
 
   private showNotification(text: string) {
-    // Automatically remove the notification after 3 seconds
-      console.log("creating notification")
+    // Check if the notification is already in localStorage
+    console.log("Showing notification!")
+    console.log(localStorage.getItem('notificationDisplayed'))
+    if (!localStorage.getItem('notificationDisplayed')) {
+
       const notification = document.createElement('div');
       notification.style.position = 'fixed';
       notification.style.top = '20px';
@@ -54,13 +66,18 @@ export class RabbitMQService {
       notification.style.fontSize = '16px';
       notification.style.zIndex = '9999';
       notification.innerText = text;
-      document.body.appendChild(notification);
-      console.log("appending")
 
+      document.body.appendChild(notification);
+
+      // Set a flag in localStorage to indicate notification is shown
+      localStorage.setItem('notificationDisplayed', text);
+
+      // Automatically remove the notification after 3 seconds
       setTimeout(() => {
         notification.remove();
-        window.location.reload()
+        localStorage.removeItem('notificationDisplayed'); // Remove flag after the notification disappears
       }, 3000);
+    }
   }
 
 }
