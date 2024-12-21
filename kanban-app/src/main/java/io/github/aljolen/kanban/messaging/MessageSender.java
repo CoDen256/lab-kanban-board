@@ -14,8 +14,7 @@ public class MessageSender {
     @Autowired
     private Queue queue;
 
-    public void send() {
-        String message = "Hello World!";
+    public void send(String message) {
         this.template.convertAndSend(queue.getName(), message);
         System.out.println(" [x] Sent '" + message + "'");
     }

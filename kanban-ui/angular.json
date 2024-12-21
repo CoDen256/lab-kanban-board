@@ -23,6 +23,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/@costlydeveloper/ngx-awesome-popup/styles/theme.css",
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"
             ],

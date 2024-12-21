@@ -1,5 +1,6 @@
 package io.github.aljolen.kanban.service;
 
+import io.github.aljolen.kanban.messaging.MessageSender;
 import io.github.aljolen.kanban.model.Task;
 import io.github.aljolen.kanban.controller.TaskDTO;
 import io.github.aljolen.kanban.repository.task.TaskRepository;
@@ -15,9 +16,11 @@ import java.util.Optional;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
+    private final MessageSender sender;
 
-    public TaskServiceImpl(TaskRepository taskRepository) {
+    public TaskServiceImpl(TaskRepository taskRepository, MessageSender sender) {
         this.taskRepository = taskRepository;
+        this.sender = sender;
     }
 
     @Override
@@ -45,7 +48,9 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional
     public Task saveNewTask(TaskDTO taskDTO) {
-        return taskRepository.save(convertDTOToTask(taskDTO));
+        Task save = taskRepository.save(convertDTOToTask(taskDTO));
+        sender.send("Created task: " + save.getTitle());
+        return save;
     }
 
     @Override

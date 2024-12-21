@@ -10,10 +10,4 @@ public class MessagingConfiguration{
     public Queue notificationsQueue() {
         return new Queue("notifications", true);
     }
-
-    @Bean
-    public Object stuff(MessageSender sender){
-        sender.send();
-        return new Object();
-    }
 }

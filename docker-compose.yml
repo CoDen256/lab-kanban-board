@@ -69,6 +69,7 @@ services:
     ports:
       - "5672:5672" # RabbitMQ AMQP port
       - "15672:15672" # RabbitMQ management console
+      - "15674:15674" # RabbitMQ stomp
 
 volumes:
   kanban-data:

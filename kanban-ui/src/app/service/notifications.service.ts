@@ -1,26 +1,44 @@
 import { Injectable } from '@angular/core';
-import { AMQPWebSocketClient } from './js/amqp-websocket-client.mjs'
+import { Client, StompSubscription } from '@stomp/stompjs';
+// Import service from the library
+import { ToastEvokeService } from '@costlydeveloper/ngx-awesome-popup';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class RabbitMQService {
+  private client: Client;
 
-  private amqp: AMQPWebSocketClient = new AMQPWebSocketClient("ws://rabbitmq:15674/ws", "/", "myuser", "secret")
-  constructor() {}
-
-  async connect(): Promise<void> {
-    console.log("connection")
-
-    const conn = await this.amqp.connect()
-    const ch = await conn.channel()
-    console.log("channel"+ch)
-
-    const q = await ch.queue("notifications")
-    console.log("queie"+q)
-    const consumer = await q.subscribe({noAck: false}, (msg) => {
-      console.log(msg)
-      msg.ack()
-    })
+  constructor(private toast: NgToastService) {
+    this.client = new Client({
+      brokerURL: 'ws://' + window.location.hostname + ':15674/ws',
+      connectHeaders: {
+        login: 'myuser',
+        passcode: 'secret'
+      },
+      debug: (str) => {
+        console.log(str);
+      },
+      onConnect: (frame) => {
+        console.log('Connected to RabbitMQ');
+        this.subscribeToQueue();
+      },
+      onStompError: (frame) => {
+        console.error('STOMP error:', frame);
+      }
+    });
   }
+
+  connect() {
+    this.client.activate();
+  }
+
+  private subscribeToQueue(): void {
+    const subscription: StompSubscription = this.client.subscribe('/queue/notifications', (message) => {
+      console.log('Received message:', message.body);
+      this.toast.success({detail:'Success',summary:message.body, sticky:true,position:'tr'})
+    });
+  }
+
 }

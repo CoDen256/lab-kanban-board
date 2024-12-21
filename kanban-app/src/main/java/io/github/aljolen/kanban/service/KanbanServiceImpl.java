@@ -1,5 +1,6 @@
 package io.github.aljolen.kanban.service;
 
+import io.github.aljolen.kanban.messaging.MessageSender;
 import io.github.aljolen.kanban.model.Kanban;
 import io.github.aljolen.kanban.controller.KanbanDTO;
 import io.github.aljolen.kanban.model.Task;
@@ -19,11 +20,13 @@ public class KanbanServiceImpl implements KanbanService {
 
     private final TaskRepository taskRepository;
     private final KanbanRepository kanbanRepository;
+    private final MessageSender sender;
 
 
-    public KanbanServiceImpl(KanbanRepository kanbanRepository, TaskRepository taskRepository) {
+    public KanbanServiceImpl(KanbanRepository kanbanRepository, TaskRepository taskRepository, MessageSender sender) {
         this.kanbanRepository = kanbanRepository;
         this.taskRepository = taskRepository;
+        this.sender = sender;
     }
 
 
@@ -78,6 +81,7 @@ public class KanbanServiceImpl implements KanbanService {
     public Kanban addNewTaskToKanban(Long kanbanId, TaskDTO taskDTO) {
         Kanban kanban = kanbanRepository.findById(kanbanId).get();
         taskRepository.save(convertDTOToTask(taskDTO, kanbanId));
+        sender.send("Created task: " + taskDTO.getTitle());
         return kanban;
     }
 
