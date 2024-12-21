@@ -50,6 +50,10 @@ export class KanbanService {
       .catch(error => console.error("Error occurred:", error));
   }
 
+  getImageUrl(id: String): string{
+    return this.kanbanAppUrl +"/images/"+id
+  }
+
   getImageById(id: string): Promise<void|Blob>{
     return fetch(this.kanbanAppUrl +"/images/"+id)
       .then(r => r.blob())

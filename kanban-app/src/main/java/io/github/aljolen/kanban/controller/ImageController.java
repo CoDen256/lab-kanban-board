@@ -2,6 +2,8 @@ package io.github.aljolen.kanban.controller;
 
 import io.github.aljolen.kanban.model.Image;
 import io.github.aljolen.kanban.service.ImageService;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
@@ -44,15 +46,34 @@ public class ImageController{
         try {
             Optional<Image> image = imageService.getImageById(id);
             if (image.isPresent()) {
-                return new ResponseEntity<>(
-                        image.get().getImage(),
-                        HttpStatus.OK);
+                return ResponseEntity.ok()
+                        .contentType(getMediaTypeForFileName(image.get().getName()))
+                        .body(image.get().getImage());
             } else {
                 return noImageFoundResponse(id);
             }
         } catch (Exception e) {
             return errorResponse();
         }
+    }
+
+    private static final Map<String, MediaType> MEDIA_TYPE_MAP = new HashMap<>();
+
+    static {
+        MEDIA_TYPE_MAP.put("jpg", MediaType.IMAGE_JPEG);
+        MEDIA_TYPE_MAP.put("jpeg", MediaType.IMAGE_JPEG);
+        MEDIA_TYPE_MAP.put("png", MediaType.IMAGE_PNG);
+        MEDIA_TYPE_MAP.put("gif", MediaType.IMAGE_GIF);
+    }
+
+    public static MediaType getMediaTypeForFileName(String fileName) {
+        String extension = getFileExtension(fileName).toLowerCase();
+        return MEDIA_TYPE_MAP.getOrDefault(extension, MediaType.APPLICATION_OCTET_STREAM);
+    }
+
+    private static String getFileExtension(String fileName) {
+        int lastDot = fileName.lastIndexOf('.');
+        return (lastDot != -1 && lastDot < fileName.length() - 1) ? fileName.substring(lastDot + 1) : "";
     }
 
     @PostMapping("/")

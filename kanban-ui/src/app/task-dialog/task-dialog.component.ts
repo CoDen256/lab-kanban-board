@@ -31,6 +31,9 @@ export class TaskDialogComponent implements OnInit {
     this.dialogTitle = data.title;
     this.kanbanId = data.kanbanId;
     this.task = data.task;
+    if (this.task.imageId){
+      this.imagePreviewUrl = kanbanService.getImageUrl(this.task.imageId)
+    }
 
     this.form = fb.group({
       title: [this.task.title, Validators.required],
